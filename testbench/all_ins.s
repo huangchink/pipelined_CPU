@@ -1,0 +1,34 @@
+ADDI R1 R0 1  // 1
+SLTI R2 R1 87 // 1
+ANDI R3 R2 1  // 1
+ORI  R4 R3 2  // 3
+XORI R5 R4 2  // 1
+SLLI R6 R5 31 // 0x80000000
+SRLI R7 R6 1  // 0x40000000
+SRAI R8 R6 1  // 0xc0000000
+ADD  R1 R1 R2 // 2
+SLT  R2 R4 R1 // 0
+AND  R3 R3 R2 // 0
+OR   R4 R3 R2 // 0
+XOR  R5 R1 R1 // 0
+SLL  R6 R1 R1 // 8
+SRL  R7 R1 R1 // 0
+SUB  R8 R1 R6 // -6
+SRA  R9 R8 R1 // -2
+LOOP1:
+SUB  R8 R8 R9 // R8 -= -3
+BNE  LOOP1 R8 R0 // R8 = 0
+LOOP2:
+ADD  R6 R6 R9 // R6 += -2
+BLT  LOOP2 R0 R6 // R6 = 0
+SW   R1 R0 0
+SW   R9 R0 1
+LW   R1 R0 1 // R1 <= R2
+LW   R9 R0 0 // R2 <= R1
+ADD  R1 R1 R9 // R1 = 0
+LOOP3:
+SRLI R9 R9 1 // R9 >>= 1
+BEQ  FINISH R9 R0 // R9 = 0
+BGE  LOOP3 R0 R0 // always branch
+FINISH:
+NOP
